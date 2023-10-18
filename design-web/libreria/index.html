@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+</head>
+<body>
+    <form action="">
+        <input type="text" id="nombre" placeholder="nombre">
+        <input type="text" id="edad" placeholder="edad">
+        <input type="text" id="curso" placeholder="curso">
+        <button class="btn">Agregar</button>
+    </form>
+    
+    <script src="sweetalert2.all.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script>
+    const estudiantes = [];
+        class Estudiante {
+            constructor(literal) {
+                this.id = estudiantes.length;
+                this.nombre = literal.nombre;
+                this.edad = literal.edad;
+                this.curso = literal.curso;
+            };
+        }
+
+        const btn = document.querySelector('.btn').addEventListener('click', (e) =>{
+            e.preventDefault();
+            let datos = agregarEstudiante();
+            Swal.fire({
+                icon:'success',
+                title: 'Estudiante agregado',
+                showConfirmButton: false,
+                timer: 3000,
+                text: "Nombre: "+datos.nombre+', Edad: '+datos.edad+', Curso: '+datos.curso+''
+            })
+
+        })
+
+
+        function agregarEstudiante() {
+            const nombre = document.getElementById("nombre").value;
+            const edad = document.getElementById("edad").value;
+            const curso = document.getElementById("curso").value;
+            const nuevoEstudiante = new Estudiante({ nombre, edad, curso });
+            estudiantes.push(nuevoEstudiante);
+            return {nombre, edad, curso}
+        }
+    </script>
+</body>
+</html>
