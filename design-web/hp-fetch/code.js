@@ -1,40 +1,3 @@
-// let listaEstudiantes = document.getElementById('listaEstudiantes');
-
-// fetch('https://hp-api.onrender.com/api/characters/students')
-//     .then(resp => resp.json())
-//     .then(data => {
-
-//         console.log(data);
-
-//         data.forEach(student => {
-//             const tr = document.createElement('tr');
-//             tr.innerHTML = `
-//             <td>${student.name}</td>
-//             <td>${student.gender}</td>
-//             <td>${student.species}</td>
-//             <td><button class="showInfo" data-key="${key}">Más Info</button></td>
-//             `
-//             listaEstudiantes.append(tr)
-//         })
-
-//         const showInfoButtons = document.querySelectorAll('.showInfo');
-//         showInfoButtons.forEach(button => {
-//             button.addEventListener('click', cambiarEstadoPedido);
-//     })
-
-//     })
-
-// function cambiarEstadoPedido(event) {
-//     const key = event.currentTarget.getAttribute('data-key');
-//     const pedidoString = localStorage.getItem(key);
-//     const pedido = JSON.parse(pedidoString);
-
-//     pedido.entregado = !pedido.entregado;
-//     localStorage.setItem(key, JSON.stringify(pedido));
-
-//     mostrarPedidosPendientes();
-// }
-
 let listaEstudiantes = document.getElementById('listaEstudiantes');
  
 fetch('https://hp-api.onrender.com/api/characters/students')
@@ -49,24 +12,18 @@ fetch('https://hp-api.onrender.com/api/characters/students')
  
         data.forEach(student => {
             const section = document.createElement('section');
+            var nameStudentAlt = student.name;
             section.innerHTML = `
             <div class="fpfStudent">
-                <img src="`+fpfStudent(student.image)+`" alt="image-${student.name}">
+                <img src="`+fpfStudent(student.image)+`" alt="image-${nameStudentAlt.replace(/ /g, "")}">
             </div>
-            <div class="minDatosStudent">
+            <div>
                 <p class="nameStudent">${student.name}</p>
-                <p class="genderStudent">${student.gender}</p>
-                <p class="speciesStudent">${student.species}</p>
                 <button class="showInfo" data-key="${student.id}">Más Info</button>
             </div>
                 `;
-                // 
-           
-            // <button class="showInfo" data-key="${key}">Más Info</button>
-            // ;
  
             listaEstudiantes.append(section);
-            // modal(student.name, student.image, student.gender, student.dateOfBirth, student.species, student.house);
             
         })
 
@@ -75,19 +32,19 @@ fetch('https://hp-api.onrender.com/api/characters/students')
         button.addEventListener('click', function() {
 
             const studentId = button.getAttribute('data-key');
-            const student = data.find(s => s.id === studentId);   
+            const student = data.find(s => s.id === studentId);
 
            if(student){
             Swal.fire({
                 title: student.name,
                 imageUrl: fpfStudent(student.image),
-                imageWidth: 50,
-                imageHeight: 100,
+                imageWidth: 100,
+                imageHeight: 140,
                 text: "No podras revertir esto!",
-                html: ` <p><strong>Género:</strong> ${student.gender}</p><br>
-                        <strong><p>Fecha de nacimiento:</p></strong> <p>${student.dateOfBirth}</p><br>
-                        <strong><p>Especie:</p></strong> <p>${student.species}</p><br>
-                        <strong><p>Casa:</p></strong> <p>${student.house}</p>
+                html: ` <p><strong>Género:</strong> ${genderStudent(student.gender)}</p><br>
+                        ${student.dateOfBirth ? `<p><strong>Fecha de nacimiento:</strong> ${student.dateOfBirth}</p><br>` : '<p><strong>Fecha de nacimiento:</strong> No registrada</p><br>'}
+                        ${student.ancestry ? `<p><strong>Ancestro:</strong> ${student.ancestry}</p><br>` : '<p><strong>Ancestro:</strong> No registrado</p><br>'}
+                        ${student.house ? `<p><strong>Casa:</strong> ${student.house}</p><br>` : '<p><strong>Casa:</strong> No registrada</p><br>'}
                 `,
                 confirmButtonColor: '#3085d6',
                 })
@@ -98,16 +55,6 @@ fetch('https://hp-api.onrender.com/api/characters/students')
         })
         
         })
-
-        
-            
-        // function modal(name, image, gender, date, species, house){
-        // }
-
-        // const showInfoButtons = document.querySelectorAll('.showInfo');
-        // showInfoButtons.forEach(button => {
-        //     button.addEventListener('click', cambiarEstadoPedido);
-        // })
         
         function fpfStudent(imageStudent){
             if(imageStudent == ""){
@@ -116,29 +63,22 @@ fetch('https://hp-api.onrender.com/api/characters/students')
                 return ""+imageStudent+"";
             }
         }
+
+        function genderStudent(genderStudent){
+            if(genderStudent == "male"){
+                return "♂️ Hombre";
+            } else if (genderStudent == "female") {
+                return "♀ Mujer";
+            } else {
+                return "No definido"
+            }
+        }
     }
  
     showStudents();
 
 })
  
-// function showMaxDatos(name, fecnac, gender, species, house){
-//     const key = event.currentTarget.getAttribute('data-key');
-//     const pedidoString = localStorage.getItem(key);
-//     const 
-// }
- 
-// function cambiarEstadoPedido(event){
-//     const key = event.currentTarget.getAttribute('data-key');
-//     const pedidoString = localStorage.getItem(key);
-//     const pedido = JSON.parse(pedidoString);
- 
-//     pedido.entregado = !pedido.entregado;
-//     localStorage.setItem(key, JSON.stringify(pedido));
- 
- 
-// }
-
 // {"id":"9e3f7ce4-b9a7-4244-b709-dae5c1f1d4a8","name":"Harry Potter","alternate_names":["The Boy Who Lived","The Chosen One"],
 // "species":"human","gender":"male","house":"Gryffindor","dateOfBirth":"31-07-1980","yearOfBirth":1980,"wizard":true, 
 // "ancestry":"half-blood","eyeColour":"green","hairColour":"black","wand":{"wood":"holly","core":"phoenix feather","length":11},  
