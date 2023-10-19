@@ -65,11 +65,16 @@ fetch('https://hp-api.onrender.com/api/characters/students')
  
             listaEstudiantes.append(section);
         })
- 
+
         const showInfoButtons = document.querySelectorAll('.showInfo');
         showInfoButtons.forEach(button => {
-            button.addEventListener('click', cambiarEstadoPedido);
+            button.addEventListener('click', showMaxDatos(student.name, student.dateOfBirth, student.gender, student.species, student.house));
         })
+ 
+        // const showInfoButtons = document.querySelectorAll('.showInfo');
+        // showInfoButtons.forEach(button => {
+        //     button.addEventListener('click', cambiarEstadoPedido);
+        // })
         
         function fpfStudent(imageStudent){
             if(imageStudent == ""){
@@ -84,6 +89,11 @@ fetch('https://hp-api.onrender.com/api/characters/students')
 
 })
  
+function showMaxDatos(name, fecnac, gender, species, house){
+    const key = event.currentTarget.getAttribute('data-key');
+    const pedidoString = localStorage.getItem(key);
+    const 
+}
  
 // function cambiarEstadoPedido(event){
 //     const key = event.currentTarget.getAttribute('data-key');
