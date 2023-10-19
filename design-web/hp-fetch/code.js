@@ -57,20 +57,40 @@ fetch('https://hp-api.onrender.com/api/characters/students')
                 <p class="nameStudent">${student.name}</p>
                 <p class="genderStudent">${student.gender}</p>
                 <p class="speciesStudent">${student.species}</p>
-                <button class="showInfo" data-key="${key}">Más Info</button>
+                <button class="showInfo">Más Info</button>
             </div>
-            `;
+                `;
+                // 
+           
             // <button class="showInfo" data-key="${key}">Más Info</button>
             // ;
  
             listaEstudiantes.append(section);
+            modal(student.name, student.image, student.gender, student.dateOfBirth, student.species, student.house);
         })
+            
+        function modal(name, image, gender, date, species, house){
+            const showInfoButtons = document.querySelectorAll('.showInfo');
+            showInfoButtons.forEach(button => {
+            button.addEventListener('click', 
+                Swal.fire({
+                    title: name,
+                    imageURL: image,
+                    imageWidth: 200,
+                    imageHeight: 400,
+                    text: "No podras revertir esto!",
+                    html: ` <strong><p>Género:</p></strong> <p>${gender}</p><br>
+                            <strong><p>Fecha de nacimiento:</p></strong> <p>${date}</p><br>
+                            <strong><p>Especie:</p></strong> <p>${species}</p><br>
+                            <strong><p>Casa:</p></strong> <p>${house}</p><br>
+                    `,
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    })
+                );
+            })
+        }
 
-        const showInfoButtons = document.querySelectorAll('.showInfo');
-        showInfoButtons.forEach(button => {
-            button.addEventListener('click', showMaxDatos(student.name, student.dateOfBirth, student.gender, student.species, student.house));
-        })
- 
         // const showInfoButtons = document.querySelectorAll('.showInfo');
         // showInfoButtons.forEach(button => {
         //     button.addEventListener('click', cambiarEstadoPedido);
@@ -89,11 +109,11 @@ fetch('https://hp-api.onrender.com/api/characters/students')
 
 })
  
-function showMaxDatos(name, fecnac, gender, species, house){
-    const key = event.currentTarget.getAttribute('data-key');
-    const pedidoString = localStorage.getItem(key);
-    const 
-}
+// function showMaxDatos(name, fecnac, gender, species, house){
+//     const key = event.currentTarget.getAttribute('data-key');
+//     const pedidoString = localStorage.getItem(key);
+//     const 
+// }
  
 // function cambiarEstadoPedido(event){
 //     const key = event.currentTarget.getAttribute('data-key');
