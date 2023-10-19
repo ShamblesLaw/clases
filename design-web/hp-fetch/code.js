@@ -57,7 +57,7 @@ fetch('https://hp-api.onrender.com/api/characters/students')
                 <p class="nameStudent">${student.name}</p>
                 <p class="genderStudent">${student.gender}</p>
                 <p class="speciesStudent">${student.species}</p>
-                <button class="showInfo">Más Info</button>
+                <button class="showInfo" data-key="${student.id}">Más Info</button>
             </div>
                 `;
                 // 
@@ -66,30 +66,43 @@ fetch('https://hp-api.onrender.com/api/characters/students')
             // ;
  
             listaEstudiantes.append(section);
-            modal(student.name, student.image, student.gender, student.dateOfBirth, student.species, student.house);
-        })
+            // modal(student.name, student.image, student.gender, student.dateOfBirth, student.species, student.house);
             
-        function modal(name, image, gender, date, species, house){
-            const showInfoButtons = document.querySelectorAll('.showInfo');
-            showInfoButtons.forEach(button => {
-            button.addEventListener('click', 
-                Swal.fire({
-                    title: name,
-                    imageURL: image,
-                    imageWidth: 200,
-                    imageHeight: 400,
-                    text: "No podras revertir esto!",
-                    html: ` <strong><p>Género:</p></strong> <p>${gender}</p><br>
-                            <strong><p>Fecha de nacimiento:</p></strong> <p>${date}</p><br>
-                            <strong><p>Especie:</p></strong> <p>${species}</p><br>
-                            <strong><p>Casa:</p></strong> <p>${house}</p><br>
-                    `,
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    })
-                );
-            })
-        }
+        })
+
+        const showInfoButtons = document.querySelectorAll('.showInfo');
+        showInfoButtons.forEach(button => {
+        button.addEventListener('click', function() {
+
+            const studentId = button.getAttribute('data-key');
+            const student = data.find(s => s.id === studentId);   
+
+           if(student){
+            Swal.fire({
+                title: student.name,
+                imageUrl: fpfStudent(student.image),
+                imageWidth: 50,
+                imageHeight: 100,
+                text: "No podras revertir esto!",
+                html: ` <p><strong>Género:</strong> ${student.gender}</p><br>
+                        <strong><p>Fecha de nacimiento:</p></strong> <p>${student.dateOfBirth}</p><br>
+                        <strong><p>Especie:</p></strong> <p>${student.species}</p><br>
+                        <strong><p>Casa:</p></strong> <p>${student.house}</p>
+                `,
+                confirmButtonColor: '#3085d6',
+                })
+            } else {
+                console.error("No se encontró al estudiante con ID: " + studentId);
+            }
+            
+        })
+        
+        })
+
+        
+            
+        // function modal(name, image, gender, date, species, house){
+        // }
 
         // const showInfoButtons = document.querySelectorAll('.showInfo');
         // showInfoButtons.forEach(button => {
@@ -100,7 +113,7 @@ fetch('https://hp-api.onrender.com/api/characters/students')
             if(imageStudent == ""){
                 return "./imgs/unknown-user-icon.png";
             } else {
-                return imageStudent;
+                return ""+imageStudent+"";
             }
         }
     }

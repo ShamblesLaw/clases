@@ -16,12 +16,12 @@
 #listaEstudiantes section{
     align-items: flex-end;
     width: 10vw;
-    height: 35vh;   
+    height: 42vh;   
     background-color: rgb(247, 209, 159);
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
-    text-align: center;
+    text-align: center; 
 }
 
 .fpfStudent{
@@ -36,7 +36,7 @@
 }
 
 .minDatosStudent{
-
+    
 }
 
 .nameStudent{
